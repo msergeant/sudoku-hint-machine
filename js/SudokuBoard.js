@@ -15,11 +15,11 @@ var SudokuBoard = {
     if(initialState != undefined){
       var valueArray = initialState.split("");
 
-      for(i = 0; i < 9; i++){
-        for(j = 0; j < 9; j++){
-          var num = parseInt(valueArray[ j*9 + i ]);
+      for(row = 0; row < 9; row++){
+        for(col = 0; col < 9; col++){
+          var num = parseInt(valueArray[ row*9 + col ]);
           if( num >= 0 ){
-            rawValues[i][j] = num;
+            rawValues[row][col] = num;
           }
         }
       }
