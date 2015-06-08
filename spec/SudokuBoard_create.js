@@ -1,4 +1,4 @@
-describe("SudokuBoard", function(){
+describe("SudokuBoard.create", function(){
   it("should initialize with an empty board", function(){
     var board = SudokuBoard.create();
     expect(board.values()).toEqual([[0, 0, 0, 0, 0, 0, 0, 0, 0],
