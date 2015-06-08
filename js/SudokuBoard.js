@@ -1,17 +1,9 @@
 var SudokuBoard = {
-  defaultSetup: [
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0]
-                ],
   create: function(initialState){
-    var rawValues = SudokuBoard.defaultSetup;
+    var rawValues = [];
+    for(i = 0; i < 9; i++){
+      rawValues.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    }
     if(initialState != undefined){
       var valueArray = initialState.split("");
 
