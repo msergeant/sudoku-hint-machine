@@ -1,6 +1,7 @@
 var SudokuBoard = {
   create: function(initialState){
     var rawValues = [];
+    var errors = {};
     for(i = 0; i < 9; i++){
       rawValues.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     }
@@ -22,9 +23,48 @@ var SudokuBoard = {
       return rawValues;
     };
 
+    function markRowError(row, col){
+      var num = rawValues[row][col];
+      errors.cells = [];
+      for(i = 0; i < 9; i++){
+        if(rawValues[row][i] == num){
+          errors.cells.push([row,i]);
+        }
+      }
+
+      errors.type = "row";
+    }
+
+    function markColumnError(row, col){
+      var num = rawValues[row][col];
+      errors.cells = [];
+      for(i = 0; i < 9; i++){
+        if(rawValues[i][col] == num){
+          errors.cells.push([i,col]);
+        }
+      }
+
+      errors.type = "column";
+    }
+
+    function markBoxError(rowStart, colStart, row, col){
+      var num = rawValues[row][col];
+      errors.cells = [];
+      for(row = rowStart; row < rowStart + 3; row++){
+        for(col = colStart; col < colStart + 3; col++){
+          if(rawValues[row][col] == num){
+            errors.cells.push([row,col]);
+          }
+        }
+      }
+
+      errors.type = "box";
+    }
+
     board.isValid = function(){
       var usedVals = 0;
       var valid = true;
+      errors = {};
       // test rows
       for(i = 0; i < 9; i++){
         usedVals = 0;
@@ -33,6 +73,7 @@ var SudokuBoard = {
           var num = row[j];
           if(num > 0){
             if((usedVals & (1 << num)) > 0){
+              markRowError(i,j);
               return false;
             }
 
@@ -48,6 +89,7 @@ var SudokuBoard = {
           var num = rawValues[row][col];
           if(num > 0){
             if((usedVals & (1 << num)) > 0){
+              markColumnError(row,col);
               return false;
             }
 
@@ -67,6 +109,7 @@ var SudokuBoard = {
             var num = rawValues[row][col];
             if(num > 0){
               if((usedVals & (1 << num)) > 0){
+                markBoxError(rowStart, colStart, row, col);
                 return false;
               }
 
@@ -78,6 +121,11 @@ var SudokuBoard = {
 
       return valid;
     };
+
+    board.errors = function(){
+      board.isValid();
+      return errors;
+    }
 
     return board;
   }
