@@ -29,35 +29,52 @@ var SudokuBoard = {
       for(i = 0; i < 9; i++){
         usedVals = 0;
         var row = rawValues[i];
-        row.forEach(function(num){
+        for(j = 0; j < 9; j++){
+          var num = row[j];
           if(num > 0){
             if((usedVals & (1 << num)) > 0){
-              valid = false;
+              return false;
             }
 
             usedVals |= 1 << num;
           }
-        });
-
-        if(!valid){
-          return false;
         }
       }
 
       // test columns
-      //for(row = 0; row < 9; row++){
-        //usedVals = 0;
-        //for(col = 0; col < 9; col++){
-          //var num = rawValues[row][col];
-          //if(num > 0){
-            //if(usedVals & (1 << num) > 0){
-              //return false;
-            //}
+      for(col = 0; col < 9; col++){
+        usedVals = 0;
+        for(row = 0; row < 9; row++){
+          var num = rawValues[row][col];
+          if(num > 0){
+            if((usedVals & (1 << num)) > 0){
+              return false;
+            }
 
-            //usedVals |= 1 << num;
-          //}
-        //}
-      //}
+            usedVals |= 1 << num;
+          }
+        }
+      }
+
+      // test boxes
+      var upperLefts = [0, 3, 6, 27, 30, 33, 54, 57, 60];
+      for(i = 0; i < 9; i++){
+        usedVals = 0;
+        var rowStart = Math.floor(upperLefts[i] / 9);
+        var colStart = upperLefts[i] % 9;
+        for(row = rowStart; row < rowStart + 3; row++){
+          for(col = colStart; col < colStart + 3; col++){
+            var num = rawValues[row][col];
+            if(num > 0){
+              if((usedVals & (1 << num)) > 0){
+                return false;
+              }
+
+              usedVals |= 1 << num;
+            }
+          }
+        }
+      }
 
       return valid;
     };
