@@ -1,3 +1,4 @@
 /spec/jasmine
 /js/.module-cache
+/js/sudoku-hints.js
 
