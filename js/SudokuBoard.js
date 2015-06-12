@@ -127,6 +127,14 @@ var SudokuBoard = {
       return errors;
     }
 
+    board.changeValue = function(row, col, newValue){
+      if( row >= 0 && row < 9 &&
+          col >= 0 && col < 9 &&
+          newValue >= 1 && newValue <= 9){
+        rawValues[row][col] = newValue;
+      }
+    }
+
     return board;
   }
 }
