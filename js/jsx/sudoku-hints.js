@@ -2,7 +2,7 @@ var SudokuCell = React.createClass({
   render: function(){
     return(
       <td>
-        {this.props.cellValue}
+       <input id={this.props.cellId} value={this.props.cellValue} onChange={this.props.onChange}/>
       </td>
     );
   }
@@ -10,9 +10,11 @@ var SudokuCell = React.createClass({
 
 var SudokuRow = React.createClass({
   render: function(){
-    var values = this.props.rowData.map(function(value){
+    var row = this.props.rowIndex;
+    var onChange = this.props.onChange;
+    var values = this.props.rowData.map(function(value, column){
       return(
-        <SudokuCell cellValue={ value }/>
+        <SudokuCell cellValue={ value } cellId={"cell-" + row + column} onChange={onChange}/>
       );
     });
 
@@ -27,13 +29,22 @@ var SudokuRow = React.createClass({
 var SudokuBox = React.createClass({
   getInitialState: function() {
     var board = SudokuBoard.create("000000000000000000123456789000000000050000500000000000000000000000000000000000000");
-    return { data: board.values() };
+    return { data: board };
+  },
+  cellChange: function(event){
+    var chars = event.target.id.split("");
+    var row = parseInt(chars[5]);
+    var col = parseInt(chars[6]);
+    var board = this.state.data;
+
+    board.changeValue(row, col, parseInt(event.target.value));
+    this.setState({ data: board });
   },
   render: function() {
     var rows = [];
     for(i = 0; i < 9; i++){
       rows.push(
-        <SudokuRow rowIndex={i} rowData={this.state.data[i]}/>
+        <SudokuRow rowIndex={i} rowData={this.state.data.values()[i]} onChange={this.cellChange}/>
       );
     }
     return (
