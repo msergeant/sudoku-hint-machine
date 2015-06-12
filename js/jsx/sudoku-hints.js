@@ -1,20 +1,36 @@
 var SudokuCell = React.createClass({
+  onClick: function(event){
+    event.target.select();
+  },
   render: function(){
     return(
-      <td>
-       <input id={this.props.cellId} value={this.props.cellValue} onChange={this.props.onChange}/>
+      <td className={this.props.cellClassName}>
+       <input onClick={this.onClick} id={this.props.cellId} value={this.props.cellValue} autoFocus onChange={this.props.onChange} />
       </td>
     );
   }
 });
 
 var SudokuRow = React.createClass({
+  findCellClass: function(row, col){
+    var retClass = "cell";
+    if(col == 2 || col == 5){
+      retClass += " rt";
+    }
+    if(row == 2 || row == 5){
+      retClass += " btm";
+    }
+
+    return retClass;
+  },
   render: function(){
     var row = this.props.rowIndex;
     var onChange = this.props.onChange;
+    var findClass = this.findCellClass;
     var values = this.props.rowData.map(function(value, column){
+      var cell = value > 0 ? value : "";
       return(
-        <SudokuCell cellValue={ value } cellId={"cell-" + row + column} onChange={onChange}/>
+        <SudokuCell cellValue={ cell } cellId={"cell-" + row + column} onChange={onChange} cellClassName={findClass(row, column)}/>
       );
     });
 

@@ -1,0 +1,25 @@
+.sudokuBox table {
+  border: 3px solid black;
+  border-collapse: collapse;
+}
+
+.sudokuBox td {
+  border: 1px dotted #3e3e3e;
+  border-collapse: collapse;
+}
+
+.sudokuBox td.rt{
+  border-right: 2px solid #3e3e3e;
+}
+
+.sudokuBox td.btm{
+  border-bottom: 2px solid #3e3e3e;
+}
+
+.sudokuBox input {
+  border: none;
+  font-size: 19px;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+}
