@@ -50,6 +50,7 @@ var SudokuBoard = {
     function markBoxError(rowStart, colStart, row, col){
       var num = rawValues[row][col];
       errors.cells = [];
+      errors.boxCorner = [rowStart,colStart];
       for(row = rowStart; row < rowStart + 3; row++){
         for(col = colStart; col < colStart + 3; col++){
           if(rawValues[row][col] == num){

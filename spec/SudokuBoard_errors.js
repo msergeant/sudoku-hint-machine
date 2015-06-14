@@ -67,7 +67,8 @@ describe("SudokuBoard.errors", function(){
     var board = SudokuBoard.create(boardString);
     expect(board.errors()).toEqual({
                                     cells: [[7,1], [8,2]],
-                                    type: "box"
+                                    type: "box",
+                                    boxCorner: [6,0]
                                    }
                                   );
   });
