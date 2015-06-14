@@ -1,4 +1,11 @@
 var SudokuBoard = {
+  insideBox: function(upperLeft, row, col){
+    if(upperLeft[0] <= row && row <= (upperLeft[0] + 2) &&
+       upperLeft[1] <= col && col <= (upperLeft[1] + 2) ){
+      return true;
+    }
+    return false;
+  },
   create: function(initialState){
     var rawValues = [];
     var errors = {};
