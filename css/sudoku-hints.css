@@ -16,10 +16,20 @@
   border-bottom: 2px solid #3e3e3e;
 }
 
+.sudokuBox td.err{
+  background-color: pink;
+}
+
+.sudokuBox td.prob{
+  background-color: red;
+}
+
 .sudokuBox input {
+  background-color: inherit;
   border: none;
   font-size: 19px;
   text-align: center;
   width: 40px;
   height: 40px;
 }
+

@@ -1,3 +1,13 @@
+function arrayContains(array, target){
+  var targetString = target.toString();
+  for(index = 0; index < array.length; index++){
+    if(targetString === array[index].toString()){
+      return true;
+    }
+  }
+  return false;
+}
+
 var SudokuCell = React.createClass({
   onClick: function(event){
     event.target.select();
@@ -20,6 +30,41 @@ var SudokuRow = React.createClass({
     if(row == 2 || row == 5){
       retClass += " btm";
     }
+
+    retClass += this.markErrors(row, col);
+
+    return retClass;
+  },
+  markErrors: function(row, col){
+    var errors = this.props.errorData;
+    var retClass = "";
+
+    if(errors.type == "row" && row == errors.cells[0][0]){
+      if(arrayContains(errors.cells, [row,col])){
+        retClass += " prob";
+      }
+      else{
+        retClass += " err";
+      }
+    }
+    else if(errors.type == "column" && col == errors.cells[0][1]){
+      if(arrayContains(errors.cells, [row,col])){
+        retClass += " prob";
+      }
+      else{
+        retClass += " err";
+      }
+    }
+    else if(errors.type == "box" &&
+            SudokuBoard.insideBox(errors.boxCorner, row, col)){
+      if(arrayContains(errors.cells, [row,col])){
+        retClass += " prob";
+      }
+      else{
+        retClass += " err";
+      }
+    }
+
 
     return retClass;
   },
@@ -54,13 +99,14 @@ var SudokuBox = React.createClass({
     var board = this.state.data;
 
     board.changeValue(row, col, parseInt(event.target.value));
-    this.setState({ data: board });
+    this.setState({ data: board});
   },
   render: function() {
     var rows = [];
+    var errors = this.state.data.errors();
     for(i = 0; i < 9; i++){
       rows.push(
-        <SudokuRow rowIndex={i} rowData={this.state.data.values()[i]} onChange={this.cellChange}/>
+        <SudokuRow rowIndex={i} errorData={errors} rowData={this.state.data.values()[i]} onChange={this.cellChange}/>
       );
     }
     return (
