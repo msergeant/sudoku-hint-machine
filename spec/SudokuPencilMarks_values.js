@@ -38,5 +38,20 @@ describe("SudokuPencilMarks.values", function(){
     expect(marks[0][0]).toEqual([5,6,7,8,9]);
   });
 
+  it("takes out values that have already been used in that column", function(){
+    var boardString = stringFromBoardArray([[0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [1, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [2, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [3, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [4, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0]]);
+    var board = SudokuBoard.create(boardString);
+    var marks = SudokuPencilMarks.create(board).values();
+
+    expect(marks[0][0]).toEqual([5,6,7,8,9]);
+  });
 });
 

@@ -19,6 +19,15 @@ var SudokuPencilMarks = {
       }
     }
 
+    function eliminateColumnValues(values, col){
+      for(var row = 0; row < 9; row++){
+        var rowVal = board[row][col];
+        if(rowVal > 0){
+          removeElement(values, rowVal);
+        }
+      }
+    }
+
     var marks = function() {};
 
     marks.values = function(){
@@ -34,6 +43,7 @@ var SudokuPencilMarks = {
             var remainingValues = [1,2,3,4,5,6,7,8,9];
 
             eliminateRowValues(remainingValues, row);
+            eliminateColumnValues(remainingValues, col);
 
             rawMarks[row][col] = remainingValues;
           }
