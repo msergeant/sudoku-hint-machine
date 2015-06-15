@@ -28,6 +28,18 @@ var SudokuPencilMarks = {
       }
     }
 
+    function eliminateBoxValues(values, currentRow, currentCol){
+      var boxRow = Math.floor(currentRow / 3) * 3;
+      var boxCol = Math.floor(currentCol / 3) * 3;
+      for(var row = boxRow; row < (boxRow + 3); row++){
+        for(var col = boxCol; col < (boxCol + 3); col++){
+          var rowVal = board[row][col];
+          if(rowVal > 0){
+            removeElement(values, rowVal);
+          }
+        }
+      }
+    }
     var marks = function() {};
 
     marks.values = function(){
@@ -44,6 +56,7 @@ var SudokuPencilMarks = {
 
             eliminateRowValues(remainingValues, row);
             eliminateColumnValues(remainingValues, col);
+            eliminateBoxValues(remainingValues, row, col);
 
             rawMarks[row][col] = remainingValues;
           }
