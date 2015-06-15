@@ -8,6 +8,7 @@ var SudokuBoard = {
   },
   create: function(initialState){
     var rawValues = [];
+    var rawPencilMarks = [];
     var errors = {};
     for(i = 0; i < 9; i++){
       rawValues.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -144,6 +145,19 @@ var SudokuBoard = {
           newValue >= 1 && newValue <= 9){
         rawValues[row][col] = newValue;
       }
+    }
+
+    board.pencilMarks = function(){
+      rawPencilMarks = [];
+
+      for(row = 0; row < 9; row++){
+        rawPencilMarks.push([[],[],[],[],[],[],[],[],[]]);
+        for(col = 0; col < 9; col++){
+          rawPencilMarks[row][col] = [1,2,3,4,5,6,7,8,9];
+        }
+      }
+
+      return rawPencilMarks;
     }
 
     return board;
