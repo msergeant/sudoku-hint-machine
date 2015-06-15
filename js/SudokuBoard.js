@@ -147,19 +147,6 @@ var SudokuBoard = {
       }
     }
 
-    board.pencilMarks = function(){
-      rawPencilMarks = [];
-
-      for(row = 0; row < 9; row++){
-        rawPencilMarks.push([[],[],[],[],[],[],[],[],[]]);
-        for(col = 0; col < 9; col++){
-          rawPencilMarks[row][col] = [1,2,3,4,5,6,7,8,9];
-        }
-      }
-
-      return rawPencilMarks;
-    }
-
     return board;
   }
 }
