@@ -24,12 +24,72 @@
   background-color: red;
 }
 
-.sudokuBox input {
+.sudokuBox table input {
   background-color: inherit;
   border: none;
   font-size: 19px;
   text-align: center;
   width: 40px;
   height: 40px;
+}
+
+.sudokuBox .cell{
+  width: 40px;
+  height: 40px;
+}
+
+.sudokuBox .pencil{
+  display: inline;
+  position: relative;
+  font-size: 12px;
+}
+
+.sudokuBox .pencilInput{
+  display: none;
+}
+
+.sudokuBox .pencil.one{
+  top: 0%;
+  left: 0%;
+}
+
+.sudokuBox .pencil.two{
+  top: 0%;
+  left: 33%;
+}
+
+.sudokuBox .pencil.three{
+  top: 0%;
+  left: 66%;
+}
+
+.sudokuBox .pencil.four{
+  top: 0%;
+  left: 0%;
+}
+
+.sudokuBox .pencil.five{
+  top: 0%;
+  left: 0%;
+}
+
+.sudokuBox .pencil.six{
+  top: 0%;
+  left: 0%;
+}
+
+.sudokuBox .pencil.seven{
+  top: 0%;
+  left: 0%;
+}
+
+.sudokuBox .pencil.eight{
+  top: 0%;
+  left: 0%;
+}
+
+.sudokuBox .pencil.nine{
+  top: 0%;
+  left: 0%;
 }
 

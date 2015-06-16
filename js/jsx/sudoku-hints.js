@@ -21,6 +21,43 @@ var SudokuCell = React.createClass({
   }
 });
 
+var SudokuPencilCell = React.createClass({
+  addClass: function(num){
+    var numClasses = [0, "one","two","three","four","five","six","seven","eight","nine"];
+
+    return numClasses[num];
+  },
+  onClick: function(event){
+   var target = $(event.target);
+   target.children(".marks").hide();
+   target.children("input").show().focus();
+  },
+  render: function(){
+    var numbers = [];
+    var pencilMarks = [1,2,3];
+    for(var i = 0; i < pencilMarks.length; i++){
+      numbers.push(
+        <a className={"pencil " + this.addClass(pencilMarks[i])}>
+          {pencilMarks[i]}
+        </a>
+      );
+    }
+
+    return(
+      <td className={this.props.cellClassName} onClick={this.onClick}>
+         <input
+           className="pencilInput"
+           id={this.props.cellId}
+           value=""
+           onChange={this.props.onChange} />
+        <div className="marks">
+          {numbers}
+        </div>
+      </td>
+    );
+  }
+});
+
 var SudokuRow = React.createClass({
   findCellClass: function(row, col){
     var retClass = "cell";
@@ -72,11 +109,28 @@ var SudokuRow = React.createClass({
     var row = this.props.rowIndex;
     var onChange = this.props.onChange;
     var findClass = this.findCellClass;
+    var marks = this.props.pencilMarks;
     var values = this.props.rowData.map(function(value, column){
       var cell = value > 0 ? value : "";
-      return(
-        <SudokuCell cellValue={ cell } cellId={"cell-" + row + column} onChange={onChange} cellClassName={findClass(row, column)}/>
-      );
+      var cellId = "cell-" + row + column;
+      if(value == 0 && marks != null){
+        return(
+          <SudokuPencilCell
+            cellValue={ marks[row][column] }
+            cellClassName={findClass(row, column)}
+            onChange={onChange}
+            cellId={cellId} />
+        );
+      }
+      else{
+        return(
+          <SudokuCell
+            cellValue={ cell }
+            cellId={cellId} 
+            onChange={onChange}
+            cellClassName={findClass(row, column)}/>
+        );
+      }
     });
 
     return(
@@ -89,8 +143,8 @@ var SudokuRow = React.createClass({
 
 var SudokuBox = React.createClass({
   getInitialState: function() {
-    var board = SudokuBoard.create("000000000000000000123456789000000000050000500000000000000000000000000000000000000");
-    return { data: board };
+    var board = SudokuBoard.create("000000000000000000123456789000000000000000500000000000000000000000000000000000000");
+    return { data: board, pencilMarks: null };
   },
   cellChange: function(event){
     var chars = event.target.id.split("");
@@ -101,12 +155,26 @@ var SudokuBox = React.createClass({
     board.changeValue(row, col, parseInt(event.target.value));
     this.setState({ data: board});
   },
+  showPencilMarks: function(){
+    if(this.state.pencilMarks == null){
+      var marks = SudokuPencilMarks.create(this.state.data);
+      this.setState({pencilMarks: marks.values()});
+    }
+    else{
+      this.setState({pencilMarks: null});
+    }
+  },
   render: function() {
     var rows = [];
     var errors = this.state.data.errors();
     for(i = 0; i < 9; i++){
       rows.push(
-        <SudokuRow rowIndex={i} errorData={errors} rowData={this.state.data.values()[i]} onChange={this.cellChange}/>
+        <SudokuRow
+            rowIndex={i}
+            errorData={errors}
+            rowData={this.state.data.values()[i]}
+            pencilMarks={this.state.pencilMarks}
+            onChange={this.cellChange}/>
       );
     }
     return (
@@ -114,6 +182,9 @@ var SudokuBox = React.createClass({
         <table>
           {rows}
         </table>
+        <div className="sudokuControls">
+        <input onClick={this.showPencilMarks} type="submit" value="Pencil Marks" />
+        </div>
       </div>
     );
   }
