@@ -20,7 +20,7 @@ The SpecRunner expects jasmine files to be at spec/jasmine. To run the tests:
 
     mkdir spec/jasmine
 
-    [Download this version of it](https://github.com/jasmine/jasmine/releases/download/v2.3.4/jasmine-standalone-2.3.4.zip) and save it to the above directory.
+  [Download this version of it](https://github.com/jasmine/jasmine/releases/download/v2.3.4/jasmine-standalone-2.3.4.zip) and save it to the above directory.
 
     unzip jasmine-standalone-2.3.4.zip
 
