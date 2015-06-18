@@ -9,7 +9,11 @@ React
 To install the React JSX transformer:
 
     npm install -g react-tools
+    jsx js/jsx js
 
+or to continuously update
+
+    jsx --watch js/jsx js
 
 Testing
 -------
