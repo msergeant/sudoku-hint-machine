@@ -8,14 +8,46 @@ function arrayContains(array, target){
   return false;
 }
 
+var inputKeyUp = function(){
+  return function(event){
+    var chars = event.target.id.split("");
+    var row = parseInt(chars[5]);
+    var col = parseInt(chars[6]);
+
+    function showInputHideNext(element){
+      element.next(".marks").hide();
+      element.show().focus();
+    }
+    if(event.keyCode == 38 && row > 0){ //Up
+      showInputHideNext($("#cell-" + (row - 1) + col));
+    }
+    else if(event.keyCode == 40 && row < 8){ //Down
+      showInputHideNext($("#cell-" + (row + 1) + col));
+    }
+    else if(event.keyCode == 37 && col > 0){ //Left
+      showInputHideNext($("#cell-" + row + (col - 1)));
+    }
+    else if(event.keyCode == 39 && col < 8){ //Right
+      showInputHideNext($("#cell-" + row + (col + 1)));
+    }
+  }
+};
+
 var SudokuCell = React.createClass({
   onClick: function(event){
     event.target.select();
   },
+  onKeyUp: inputKeyUp(),
   render: function(){
     return(
       <td className={this.props.cellClassName}>
-       <input onClick={this.onClick} id={this.props.cellId} value={this.props.cellValue} autoFocus onChange={this.props.onChange} />
+       <input
+       onClick={this.onClick}
+       onKeyUp={this.onKeyUp}
+       id={this.props.cellId}
+       value={this.props.cellValue}
+       autoFocus
+       onChange={this.props.onChange} />
       </td>
     );
   }
@@ -27,6 +59,7 @@ var SudokuPencilCell = React.createClass({
 
     return numClasses[num];
   },
+  onKeyUp: inputKeyUp(),
   onClick: function(event){
    var target = $(event.target).parents("td");
    target.children("input").show().focus();
@@ -55,6 +88,7 @@ var SudokuPencilCell = React.createClass({
            id={this.props.cellId}
            value=""
            onBlur={this.inputOnBlur}
+           onKeyUp={this.onKeyUp}
            onChange={this.props.onChange} />
         <div className="marks" onClick={this.onClick}>
           {numbers}
