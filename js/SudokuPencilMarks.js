@@ -69,15 +69,18 @@ var SudokuPencilMarks = {
       return rawMarks;
     }
 
-    marks.adjust = function(){
+    marks.adjust = function( numberDeleted ){
+      numberDeleted = numberDeleted || false
       for(row = 0; row < 9; row++){
         for(var col = 0; col < 9; col++){
           if(board[row][col] == 0){
-            var remainingValues = rawMarks[row][col];
+            var remainingValues = numberDeleted ? [1,2,3,4,5,6,7,8,9] : rawMarks[row][col];
 
             eliminateRowValues(remainingValues, row);
             eliminateColumnValues(remainingValues, col);
             eliminateBoxValues(remainingValues, row, col);
+
+            rawMarks[row][col] = remainingValues;
           }
         }
       }

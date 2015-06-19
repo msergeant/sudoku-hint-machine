@@ -161,7 +161,7 @@ var SudokuBox = React.createClass({
     var board = this.state.data;
 
     board.changeValue(row, col, parseInt(event.target.value));
-    this.state.pencilMarks.adjust();
+    this.state.pencilMarks.adjust(board.values()[row][col] == 0);
     this.setState({ data: board});
   },
   showPencilMarks: function(){
