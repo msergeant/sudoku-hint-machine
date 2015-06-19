@@ -43,6 +43,9 @@ var SudokuPencilMarks = {
     var marks = function() {};
 
     marks.values = function(){
+      if(rawMarks.length > 0){
+        return rawMarks;
+      }
       rawMarks = [];
 
       for(var row = 0; row < 9; row++){
@@ -64,6 +67,20 @@ var SudokuPencilMarks = {
       }
 
       return rawMarks;
+    }
+
+    marks.adjust = function(){
+      for(row = 0; row < 9; row++){
+        for(var col = 0; col < 9; col++){
+          if(board[row][col] == 0){
+            var remainingValues = rawMarks[row][col];
+
+            eliminateRowValues(remainingValues, row);
+            eliminateColumnValues(remainingValues, col);
+            eliminateBoxValues(remainingValues, row, col);
+          }
+        }
+      }
     }
 
     return marks;

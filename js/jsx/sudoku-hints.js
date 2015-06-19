@@ -116,10 +116,11 @@ var SudokuRow = React.createClass({
     var onChange = this.props.onChange;
     var findClass = this.findCellClass;
     var marks = this.props.pencilMarks;
+    var showMarks = this.props.showMarks;
     var values = this.props.rowData.map(function(value, column){
       var cell = value > 0 ? value : "";
       var cellId = "cell-" + row + column;
-      if(value == 0 && marks != null){
+      if(value == 0 && showMarks){
         return(
           <SudokuPencilCell
             cellValue={ marks[row][column] }
@@ -149,8 +150,9 @@ var SudokuRow = React.createClass({
 
 var SudokuBox = React.createClass({
   getInitialState: function() {
-    var board = SudokuBoard.create("000000000000000000123456789000000000000000500000000000000000000000000000000000000");
-    return { data: board, pencilMarks: null };
+    var board = SudokuBoard.create();
+    var marks = SudokuPencilMarks.create(board);
+    return { data: board, pencilMarks: marks, showMarks: false};
   },
   cellChange: function(event){
     var chars = event.target.id.split("");
@@ -159,27 +161,24 @@ var SudokuBox = React.createClass({
     var board = this.state.data;
 
     board.changeValue(row, col, parseInt(event.target.value));
+    this.state.pencilMarks.adjust();
     this.setState({ data: board});
   },
   showPencilMarks: function(){
-    if(this.state.pencilMarks == null){
-      var marks = SudokuPencilMarks.create(this.state.data);
-      this.setState({pencilMarks: marks.values()});
-    }
-    else{
-      this.setState({pencilMarks: null});
-    }
+    this.setState({ showMarks: !this.state.showMarks});
   },
   render: function() {
     var rows = [];
     var errors = this.state.data.errors();
+    var marks = this.state.pencilMarks == null ? null : this.state.pencilMarks.values();
     for(i = 0; i < 9; i++){
       rows.push(
         <SudokuRow
             rowIndex={i}
             errorData={errors}
             rowData={this.state.data.values()[i]}
-            pencilMarks={this.state.pencilMarks}
+            showMarks={this.state.showMarks}
+            pencilMarks={marks}
             onChange={this.cellChange}/>
       );
     }
