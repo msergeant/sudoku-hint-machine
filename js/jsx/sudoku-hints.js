@@ -28,29 +28,35 @@ var SudokuPencilCell = React.createClass({
     return numClasses[num];
   },
   onClick: function(event){
-   var target = $(event.target);
-   target.children(".marks").hide();
+   var target = $(event.target).parents("td");
    target.children("input").show().focus();
+   target.children(".marks").hide();
+  },
+  inputOnBlur: function(event){
+   var target = $(event.target).parents("td");
+   target.children(".marks").show();
+   target.children("input").hide();
   },
   render: function(){
     var numbers = [];
-    var pencilMarks = [1,2,3];
+    var pencilMarks = this.props.cellValue;
     for(var i = 0; i < pencilMarks.length; i++){
       numbers.push(
-        <a className={"pencil " + this.addClass(pencilMarks[i])}>
+        <div className={"pencil " + this.addClass(pencilMarks[i])}>
           {pencilMarks[i]}
-        </a>
+        </div>
       );
     }
 
     return(
-      <td className={this.props.cellClassName} onClick={this.onClick}>
+      <td className={this.props.cellClassName}>
          <input
            className="pencilInput"
            id={this.props.cellId}
            value=""
+           onBlur={this.inputOnBlur}
            onChange={this.props.onChange} />
-        <div className="marks">
+        <div className="marks" onClick={this.onClick}>
           {numbers}
         </div>
       </td>
@@ -126,7 +132,7 @@ var SudokuRow = React.createClass({
         return(
           <SudokuCell
             cellValue={ cell }
-            cellId={cellId} 
+            cellId={cellId}
             onChange={onChange}
             cellClassName={findClass(row, column)}/>
         );

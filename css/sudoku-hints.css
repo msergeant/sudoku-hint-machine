@@ -38,9 +38,15 @@
   height: 40px;
 }
 
+.sudokuBox .marks{
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
 .sudokuBox .pencil{
   display: inline;
-  position: relative;
+  position: absolute;
   font-size: 12px;
 }
 
@@ -64,32 +70,32 @@
 }
 
 .sudokuBox .pencil.four{
-  top: 0%;
+  top: 33%;
   left: 0%;
 }
 
 .sudokuBox .pencil.five{
-  top: 0%;
-  left: 0%;
+  top: 33%;
+  left: 33%;
 }
 
 .sudokuBox .pencil.six{
-  top: 0%;
-  left: 0%;
+  top: 33%;
+  left: 66%;
 }
 
 .sudokuBox .pencil.seven{
-  top: 0%;
+  top: 66%;
   left: 0%;
 }
 
 .sudokuBox .pencil.eight{
-  top: 0%;
-  left: 0%;
+  top: 66%;
+  left: 33%;
 }
 
 .sudokuBox .pencil.nine{
-  top: 0%;
-  left: 0%;
+  top: 66%;
+  left: 66%;
 }
 
