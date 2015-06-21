@@ -86,6 +86,13 @@ var SudokuPencilMarks = {
       }
     }
 
+    marks.remove = function(row, col, number){
+      var index = rawMarks[row][col].indexOf(number);
+      if(index > -1){
+        rawMarks[row][col].splice(index, 1);
+      }
+    }
+
     return marks;
   }
 }

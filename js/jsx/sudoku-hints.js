@@ -1,3 +1,4 @@
+var numClasses = [0, "one","two","three","four","five","six","seven","eight","nine"];
 function arrayContains(array, target){
   var targetString = target.toString();
   for(index = 0; index < array.length; index++){
@@ -55,8 +56,6 @@ var SudokuCell = React.createClass({
 
 var SudokuPencilCell = React.createClass({
   addClass: function(num){
-    var numClasses = [0, "one","two","three","four","five","six","seven","eight","nine"];
-
     return numClasses[num];
   },
   onKeyUp: inputKeyUp(),
@@ -75,7 +74,9 @@ var SudokuPencilCell = React.createClass({
     var pencilMarks = this.props.cellValue;
     for(var i = 0; i < pencilMarks.length; i++){
       numbers.push(
-        <div className={"pencil " + this.addClass(pencilMarks[i])}>
+        <div 
+          className={"pencil " + this.addClass(pencilMarks[i])}
+          onClick={this.props.onPencilMarkClick}>
           {pencilMarks[i]}
         </div>
       );
@@ -148,6 +149,7 @@ var SudokuRow = React.createClass({
   render: function(){
     var row = this.props.rowIndex;
     var onChange = this.props.onChange;
+    var onPencilMarkClick = this.props.onPencilMarkClick;
     var findClass = this.findCellClass;
     var marks = this.props.pencilMarks;
     var showMarks = this.props.showMarks;
@@ -160,6 +162,7 @@ var SudokuRow = React.createClass({
             cellValue={ marks[row][column] }
             cellClassName={findClass(row, column)}
             onChange={onChange}
+            onPencilMarkClick={onPencilMarkClick}
             cellId={cellId} />
         );
       }
@@ -201,6 +204,19 @@ var SudokuBox = React.createClass({
   showPencilMarks: function(){
     this.setState({ showMarks: !this.state.showMarks});
   },
+  onPencilMarkClick: function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    var chars = $(event.target).parents(".marks").siblings("input").attr("id");
+    var row = parseInt(chars[5]);
+    var col = parseInt(chars[6]);
+    var number = numClasses.indexOf(event.target.classList[1]);
+    if(number > -1){
+      var pencilMarks = this.state.pencilMarks;
+      pencilMarks.remove(row, col, number);
+      this.setState({ pencilMarks: pencilMarks});
+    }
+  },
   render: function() {
     var rows = [];
     var errors = this.state.data.errors();
@@ -213,6 +229,7 @@ var SudokuBox = React.createClass({
             rowData={this.state.data.values()[i]}
             showMarks={this.state.showMarks}
             pencilMarks={marks}
+            onPencilMarkClick={this.onPencilMarkClick}
             onChange={this.cellChange}/>
       );
     }

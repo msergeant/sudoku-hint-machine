@@ -49,6 +49,7 @@
   display: inline;
   position: absolute;
   font-size: 12px;
+  cursor: pointer;
 }
 
 .sudokuBox .pencilInput{
