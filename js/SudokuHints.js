@@ -1,12 +1,12 @@
 var SudokuHints = {
   create: function(sudokuBoard, pencilMarks){
     var board = sudokuBoard.values();
-    var marks = pencilMarks;
+    var marks = pencilMarks.values();
 
     var hints = function() {};
 
-    function searchForHiddenSingles(cells){
-      var counts = [null, [], [], [], [], [], [], [], [], []];
+    function findHiddenSingle(cells){
+      var pencils = [null, [], [], [], [], [], [], [], [], []];
 
       for(var cellIndex = 0; cellIndex < cells.length; cellIndex++){
         for(var num = 1; num <= 9; num++){
@@ -14,13 +14,44 @@ var SudokuHints = {
           var col = cells[cellIndex][1];
 
           if(marks[row][col].indexOf(num) > -1){
-            counts[num] << [row,col];
+            pencils[num].push([row,col]);
           }
         }
       }
 
+      var counts = pencils.map(function(val, i){
+        if(val != null){
+          return val.length;
+        }
+      });
 
+      var firstOne = counts.indexOf(1);
+      if(firstOne > -1){
+        return { cell: pencils[firstOne], value: firstOne};
+      }
 
+      return null;
+    }
+
+    function markHiddenSingle(hint){
+      if(hint.type == 'box'){
+        hint.columns = [];
+        hint.rows = [];
+        var boxRow = Math.floor(hint.cell[0][0] / 3) * 3;
+        var boxCol = Math.floor(hint.cell[0][1] / 3) * 3;
+        for(var row = boxRow; row < (boxRow + 3); row++){
+          if(board[row].indexOf(hint.value) > -1){
+            hint.rows.push(row);
+          }
+        }
+        for(var col = boxCol; col < (boxCol + 3); col++){
+          for(row = 0; row < 9; row++){
+            if(board[row][col] == hint.value){
+              hint.columns.push(col);
+            }
+          }
+        }
+      }
     }
 
     hints.hiddenSingle = function(){
@@ -30,17 +61,20 @@ var SudokuHints = {
         var cellsToCheck = [];
         var rowStart = Math.floor(upperLefts[i] / 9);
         var colStart = upperLefts[i] % 9;
-        for(row = rowStart; row < rowStart + 3; row++){
-          for(col = colStart; col < colStart + 3; col++){
-            cellsToCheck << [row,col];
+        for(var row = rowStart; row < rowStart + 3; row++){
+          for(var col = colStart; col < colStart + 3; col++){
+            cellsToCheck.push([row,col]);
           }
         }
 
-        searchForHiddenSingles(cellsToCheck);
+        var boxSingle = findHiddenSingle(cellsToCheck);
+        if(boxSingle != null){
+          boxSingle.type = 'box';
+          markHiddenSingle(boxSingle);
+          return boxSingle;
+        }
 
       }
-
-      return hint;
     }
 
     return hints;
