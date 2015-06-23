@@ -52,6 +52,33 @@ describe("SudokuHints.hiddenSingle", function(){
          })).
            toEqual(true);
   });
+
+  it("finds hidden single in a row", function(){
+    var boardString = stringFromBoardArray([[1, 2, 3, 4, 0, 0, 6, 7, 8],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 5, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0]]);
+    var board = SudokuBoard.create(boardString);
+    var pencilMarks = SudokuPencilMarks.create(board);
+    var hints = SudokuHints.create(board, pencilMarks).hiddenSingle();
+
+    expect(
+      _.isEqual(
+        hints,
+        {
+          columns: [4],
+          rows: [],
+          cell: [[0,5]],
+          value: 5,
+          type: "row"
+         })).
+           toEqual(true);
+  });
 });
 
 
