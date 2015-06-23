@@ -24,6 +24,18 @@
   background-color: red;
 }
 
+.sudokuBox td.hintCause{
+  background-color: lightblue;
+}
+
+.sudokuBox td.hintLine{
+  background-color: blue;
+}
+
+.sudokuBox td.hintTarget{
+  background-color: orange;
+}
+
 .sudokuBox table input {
   background-color: inherit;
   border: none;

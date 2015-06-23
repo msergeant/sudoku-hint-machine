@@ -110,6 +110,7 @@ var SudokuRow = React.createClass({
     }
 
     retClass += this.markErrors(row, col);
+    retClass += this.markHint(row, col);
 
     return retClass;
   },
@@ -144,6 +145,36 @@ var SudokuRow = React.createClass({
     }
 
 
+    return retClass;
+  },
+  markHint: function(row, col){
+    if(this.props.hint == null){
+      return "";
+    }
+    var hint = this.props.hint;
+    var retClass = "";
+    var rowData = this.props.rowData;
+
+    if(hint.columns.indexOf(col) > -1){
+      if(rowData[col] == hint.value){
+        retClass += " hintCause";
+      }
+      else{
+        retClass += " hintLine";
+      }
+    }
+    if(hint.rows.indexOf(row) > -1){
+      if(rowData[col] == hint.value){
+        retClass += " hintCause";
+      }
+      else{
+        retClass += " hintLine";
+      }
+    }
+
+    if(arrayContains(hint.cell, [row, col])){
+      retClass += " hintTarget";
+    }
     return retClass;
   },
   render: function(){
@@ -187,9 +218,9 @@ var SudokuRow = React.createClass({
 
 var SudokuBox = React.createClass({
   getInitialState: function() {
-    var board = SudokuBoard.create();
+    var board = SudokuBoard.create("100000000200000000300000000400000000000000000000000500700000000000500000900000000");
     var marks = SudokuPencilMarks.create(board);
-    return { data: board, pencilMarks: marks, showMarks: false};
+    return { data: board, pencilMarks: marks, showMarks: false, hint: null};
   },
   cellChange: function(event){
     var chars = event.target.id.split("");
@@ -203,6 +234,10 @@ var SudokuBox = React.createClass({
   },
   showPencilMarks: function(){
     this.setState({ showMarks: !this.state.showMarks});
+  },
+  showHint: function(){
+    var hint = SudokuHints.create(this.state.data, this.state.pencilMarks).hiddenSingle();
+    this.setState({ hint: hint});
   },
   onPencilMarkClick: function(event){
     event.preventDefault();
@@ -229,6 +264,7 @@ var SudokuBox = React.createClass({
             rowData={this.state.data.values()[i]}
             showMarks={this.state.showMarks}
             pencilMarks={marks}
+            hint={this.state.hint}
             onPencilMarkClick={this.onPencilMarkClick}
             onChange={this.cellChange}/>
       );
@@ -240,6 +276,7 @@ var SudokuBox = React.createClass({
         </table>
         <div className="sudokuControls">
         <input onClick={this.showPencilMarks} type="submit" value="Pencil Marks" />
+        <input onClick={this.showHint} type="submit" value="Show Next Hint" />
         </div>
       </div>
     );
