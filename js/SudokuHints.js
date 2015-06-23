@@ -71,6 +71,21 @@ var SudokuHints = {
       }
     }
 
+    function markHiddenColSingle(hint){
+      if(hint.type == 'column'){
+        hint.columns = [];
+        hint.rows = [];
+        var hintCol = hint.cell[0][1];
+        for(var row = 0; row < 9; row++){
+          if(board[row][hintCol] == 0){
+            if(board[row].indexOf(hint.value) > -1){
+              hint.rows.push(row);
+            }
+          }
+        }
+      }
+    }
+
     hints.hiddenSingle = function(){
       // search boxes
       var upperLefts = [0, 3, 6, 27, 30, 33, 54, 57, 60];
@@ -109,6 +124,24 @@ var SudokuHints = {
           rowSingle.type = 'row';
           markHiddenRowSingle(rowSingle);
           return rowSingle;
+        }
+
+      }
+
+      // search columns
+      for(var col = 0; col < 9; col++){
+        var cellsToCheck = [];
+        for(var row = 0; row < 9; row++){
+          if(board[row][col] == 0){
+            cellsToCheck.push([row,col]);
+          }
+        }
+
+        var colSingle = findHiddenSingle(cellsToCheck);
+        if(colSingle != null){
+          colSingle.type = 'column';
+          markHiddenColSingle(colSingle);
+          return colSingle;
         }
 
       }

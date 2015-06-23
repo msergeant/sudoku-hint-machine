@@ -79,6 +79,60 @@ describe("SudokuHints.hiddenSingle", function(){
          })).
            toEqual(true);
   });
+
+  it("finds hidden single in a row", function(){
+    var boardString = stringFromBoardArray([[1, 2, 3, 4, 0, 0, 6, 7, 8],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 5, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0]]);
+    var board = SudokuBoard.create(boardString);
+    var pencilMarks = SudokuPencilMarks.create(board);
+    var hints = SudokuHints.create(board, pencilMarks).hiddenSingle();
+
+    expect(
+      _.isEqual(
+        hints,
+        {
+          columns: [4],
+          rows: [],
+          cell: [[0,5]],
+          value: 5,
+          type: "row"
+         })).
+           toEqual(true);
+  });
+
+  it("finds hidden single in a column", function(){
+    var boardString = stringFromBoardArray([[1, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [2, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [3, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [4, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 5, 0, 0],
+                                            [7, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 5, 0, 0, 0, 0, 0],
+                                            [9, 0, 0, 0, 0, 0, 0, 0, 0]]);
+    var board = SudokuBoard.create(boardString);
+    var pencilMarks = SudokuPencilMarks.create(board);
+    var hints = SudokuHints.create(board, pencilMarks).hiddenSingle();
+
+    expect(
+      _.isEqual(
+        hints,
+        {
+          columns: [],
+          rows: [5,7],
+          cell: [[4,0]],
+          value: 5,
+          type: "column"
+         })).
+           toEqual(true);
+  });
 });
 
 
