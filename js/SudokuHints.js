@@ -201,6 +201,16 @@ var SudokuHints = {
       return single;
     }
 
+    hints.getNextHint = function(){
+      var hint = this.nakedSingle();
+
+      if(hint == null){
+        hint = this.hiddenSingle();
+      }
+
+      return hint;
+    }
+
     return hints;
   }
 }

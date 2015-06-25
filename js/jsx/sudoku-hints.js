@@ -154,9 +154,10 @@ var SudokuRow = React.createClass({
     var hint = this.props.hint;
     var retClass = "";
     var rowData = this.props.rowData;
+    var theNum = rowData[col];
 
     if(hint.columns.indexOf(col) > -1){
-      if(rowData[col] == hint.value){
+      if(theNum == hint.value){
         retClass += " hintCause";
       }
       else{
@@ -164,12 +165,19 @@ var SudokuRow = React.createClass({
       }
     }
     if(hint.rows.indexOf(row) > -1){
-      if(rowData[col] == hint.value){
+      if(theNum == hint.value){
         retClass += " hintCause";
       }
       else{
         retClass += " hintLine";
       }
+    }
+
+    if(hint.highlightCells != null && 
+       hint.highlightCells[theNum] != null &&
+       hint.highlightCells[theNum][0] == row &&
+       hint.highlightCells[theNum][1] == col){
+        retClass += " hintCause";
     }
 
     if(arrayContains(hint.cell, [row, col])){
@@ -240,7 +248,7 @@ var SudokuBox = React.createClass({
       this.setState({ hint: null});
     }
     else{
-      var hint = SudokuHints.create(this.state.data, this.state.pencilMarks).hiddenSingle();
+      var hint = SudokuHints.create(this.state.data, this.state.pencilMarks).getNextHint();
       this.setState({ hint: hint});
     }
   },
