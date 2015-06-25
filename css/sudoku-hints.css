@@ -29,7 +29,7 @@
 }
 
 .sudokuBox td.hintLine{
-  background-color: blue;
+  background-color: grey;
 }
 
 .sudokuBox td.hintTarget{

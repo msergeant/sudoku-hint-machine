@@ -230,14 +230,19 @@ var SudokuBox = React.createClass({
 
     board.changeValue(row, col, parseInt(event.target.value));
     this.state.pencilMarks.adjust(board.values()[row][col] == 0);
-    this.setState({ data: board});
+    this.setState({ data: board, hint: null});
   },
   showPencilMarks: function(){
     this.setState({ showMarks: !this.state.showMarks});
   },
   showHint: function(){
-    var hint = SudokuHints.create(this.state.data, this.state.pencilMarks).hiddenSingle();
-    this.setState({ hint: hint});
+    if(this.state.data.errors().type != null){
+      this.setState({ hint: null});
+    }
+    else{
+      var hint = SudokuHints.create(this.state.data, this.state.pencilMarks).hiddenSingle();
+      this.setState({ hint: hint});
+    }
   },
   onPencilMarkClick: function(event){
     event.preventDefault();
