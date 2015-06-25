@@ -147,6 +147,60 @@ var SudokuHints = {
       }
     }
 
+    function findNakedSingle(){
+      for(var row = 0; row < 9; row++){
+        for(var col = 0; col < 9; col++){
+          if(marks[row][col].length == 1 && board[row][col] == 0){
+            return { cell: [[row,col]], type: "naked", value: marks[row][col][0]};
+          }
+        }
+      }
+
+      return null;
+    }
+
+    function markNakedSingle(single){
+      single.highlightCells = [null, null, null, null, null, null, null, null, null, null];
+      var cellRow = single.cell[0][0];
+      var cellCol = single.cell[0][1];
+
+      var boxRow = Math.floor(cellRow / 3) * 3;
+      var boxCol = Math.floor(cellCol / 3) * 3;
+      for(var row = boxRow; row < (boxRow + 3); row++){
+        for(var col = boxCol; col < (boxCol + 3); col++){
+          var num = board[row][col];
+          if(num > 0 && single.highlightCells[num] == null){
+            single.highlightCells[num] = [row,col];
+          }
+        }
+      }
+
+      for(var row = 0; row < 9; row++){
+        var num = board[row][cellCol];
+        if(num > 0 && single.highlightCells[num] == null){
+          single.highlightCells[num] = [row,cellCol];
+        }
+      }
+      for(var col = 0; col < 9; col++){
+        var num = board[cellRow][col];
+        if(num > 0 && single.highlightCells[num] == null){
+          single.highlightCells[num] = [cellRow,col];
+        }
+      }
+    }
+
+    hints.nakedSingle = function(single){
+      var single = findNakedSingle();
+
+      if(single != null){
+        single.columns = [];
+        single.rows = [];
+        markNakedSingle(single);
+      }
+
+      return single;
+    }
+
     return hints;
   }
 }
