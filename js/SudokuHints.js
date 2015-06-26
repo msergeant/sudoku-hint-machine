@@ -37,6 +37,7 @@ var SudokuHints = {
       if(hint.type == 'box'){
         hint.columns = [];
         hint.rows = [];
+        hint.boxes = [];
         var boxRow = Math.floor(hint.cell[0][0] / 3) * 3;
         var boxCol = Math.floor(hint.cell[0][1] / 3) * 3;
         for(var row = boxRow; row < (boxRow + 3); row++){
@@ -58,6 +59,7 @@ var SudokuHints = {
       if(hint.type == 'row'){
         hint.columns = [];
         hint.rows = [];
+        hint.boxes = [];
         var hintRow = hint.cell[0][0];
         for(var col = 0; col < 9; col++){
           if(board[hintRow][col] == 0){
@@ -75,6 +77,7 @@ var SudokuHints = {
       if(hint.type == 'column'){
         hint.columns = [];
         hint.rows = [];
+        hint.boxes = [];
         var hintCol = hint.cell[0][1];
         for(var row = 0; row < 9; row++){
           if(board[row][hintCol] == 0){
