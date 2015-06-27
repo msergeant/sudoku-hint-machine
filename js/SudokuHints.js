@@ -232,10 +232,10 @@ var SudokuHints = {
     }
 
     hints.getNextHint = function(){
-      var hint = this.nakedSingle();
+      var hint = this.hiddenSingle();
 
       if(hint == null){
-        hint = this.hiddenSingle();
+        hint = this.nakedSingle();
       }
 
       return hint;

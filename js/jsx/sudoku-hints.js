@@ -261,6 +261,17 @@ var SudokuBox = React.createClass({
       this.setState({ hint: hint});
     }
   },
+  performHint: function(){
+    var hint = this.state.hint;
+    if(hint != null){
+      var row = hint.cell[0][0];
+      var col = hint.cell[0][1];
+      var board = this.state.data;
+      board.changeValue(row, col, hint.value);
+      this.state.pencilMarks.adjust(false);
+      this.setState({ data: board, hint: null});
+    }
+  },
   onPencilMarkClick: function(event){
     event.preventDefault();
     event.stopPropagation();
@@ -291,6 +302,7 @@ var SudokuBox = React.createClass({
             onChange={this.cellChange}/>
       );
     }
+    var doHintButton = <input onClick={this.performHint} type="submit" value="Do Hint" />;
     return (
       <div className="sudokuBox">
         <table>
@@ -299,6 +311,7 @@ var SudokuBox = React.createClass({
         <div className="sudokuControls">
         <input onClick={this.showPencilMarks} type="submit" value="Pencil Marks" />
         <input onClick={this.showHint} type="submit" value="Show Next Hint" />
+        { this.state.hint == null ? '' : doHintButton }
         </div>
       </div>
     );
