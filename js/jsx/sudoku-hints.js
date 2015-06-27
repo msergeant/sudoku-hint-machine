@@ -155,6 +155,7 @@ var SudokuRow = React.createClass({
     var retClass = "";
     var rowData = this.props.rowData;
     var theNum = rowData[col];
+    var box = SudokuBoard.cellToBox(row, col);
 
     if(hint.columns.indexOf(col) > -1){
       if(theNum == hint.value){
@@ -165,6 +166,14 @@ var SudokuRow = React.createClass({
       }
     }
     if(hint.rows.indexOf(row) > -1){
+      if(theNum == hint.value){
+        retClass += " hintCause";
+      }
+      else{
+        retClass += " hintLine";
+      }
+    }
+    if(hint.boxes != null && hint.boxes.indexOf(box) > -1){
       if(theNum == hint.value){
         retClass += " hintCause";
       }

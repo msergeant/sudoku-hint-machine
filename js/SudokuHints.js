@@ -70,12 +70,6 @@ var SudokuHints = {
       return false;
     }
 
-    function cellToBox(row, col){
-      var boxRow = Math.floor(row / 3) * 3;
-      var boxCol = Math.floor(col / 3) * 3;
-      return Math.floor(boxRow / 3) * 3 + Math.floor(boxCol / 3);
-    }
-
     function markHiddenRowSingle(hint){
       if(hint.type == 'row'){
         hint.columns = [];
@@ -90,7 +84,7 @@ var SudokuHints = {
               }
             }
             if(boxContainsValue(hintRow, col, hint.value)){
-              var box = cellToBox(hintRow, col);
+              var box = SudokuBoard.cellToBox(hintRow, col);
               if(hint.boxes.indexOf(box) == -1){
                 hint.boxes.push(box);
               }
@@ -112,7 +106,7 @@ var SudokuHints = {
               hint.rows.push(row);
             }
             if(boxContainsValue(row, hintCol, hint.value)){
-              var box = cellToBox(row, hintCol);
+              var box = SudokuBoard.cellToBox(row, hintCol);
               if(hint.boxes.indexOf(box) == -1){
                 hint.boxes.push(box);
               }

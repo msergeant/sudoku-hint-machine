@@ -1,4 +1,10 @@
 var SudokuBoard = {
+
+  cellToBox: function(row, col){
+      var boxRow = Math.floor(row / 3) * 3;
+      var boxCol = Math.floor(col / 3) * 3;
+      return Math.floor(boxRow / 3) * 3 + Math.floor(boxCol / 3);
+    },
   insideBox: function(upperLeft, row, col){
     if(upperLeft[0] <= row && row <= (upperLeft[0] + 2) &&
        upperLeft[1] <= col && col <= (upperLeft[1] + 2) ){
