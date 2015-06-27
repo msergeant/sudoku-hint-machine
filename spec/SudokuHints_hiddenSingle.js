@@ -111,6 +111,34 @@ describe("SudokuHints.hiddenSingle", function(){
            toEqual(true);
   });
 
+  it("marks boxes when single is in a row", function(){
+    var boardString = stringFromBoardArray([[1, 2, 3, 4, 0, 6, 7, 8, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 5, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                            [0, 0, 0, 0, 0, 0, 0, 0, 0]]);
+    var board = SudokuBoard.create(boardString);
+    var pencilMarks = SudokuPencilMarks.create(board);
+    var hints = SudokuHints.create(board, pencilMarks).hiddenSingle();
+
+    expect(
+      _.isEqual(
+        hints,
+        {
+          columns: [],
+          rows: [],
+          boxes: [2],
+          cell: [[0,4]],
+          value: 5,
+          type: "row"
+         })).
+           toEqual(true);
+  });
+
   it("marks boxes when single is in a column", function(){
     var boardString = stringFromBoardArray([[1, 0, 0, 0, 0, 0, 0, 0, 0],
                                             [2, 0, 0, 0, 0, 0, 0, 0, 0],

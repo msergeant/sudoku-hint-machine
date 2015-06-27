@@ -55,6 +55,27 @@ var SudokuHints = {
       }
     }
 
+    function boxContainsValue(cellRow, cellCol, val){
+      var boxRow = Math.floor(cellRow / 3) * 3;
+      var boxCol = Math.floor(cellCol / 3) * 3;
+
+      for(var row = boxRow; row < (boxRow + 3); row++){
+        for(var col = boxCol; col < (boxCol + 3); col++){
+          if(board[row][col] == val){
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    function cellToBox(row, col){
+      var boxRow = Math.floor(row / 3) * 3;
+      var boxCol = Math.floor(col / 3) * 3;
+      return Math.floor(boxRow / 3) * 3 + Math.floor(boxCol / 3);
+    }
+
     function markHiddenRowSingle(hint){
       if(hint.type == 'row'){
         hint.columns = [];
@@ -66,6 +87,12 @@ var SudokuHints = {
             for(row = 0; row < 9; row++){
               if(board[row][col] == hint.value){
                 hint.columns.push(col);
+              }
+            }
+            if(boxContainsValue(hintRow, col, hint.value)){
+              var box = cellToBox(hintRow, col);
+              if(hint.boxes.indexOf(box) == -1){
+                hint.boxes.push(box);
               }
             }
           }
@@ -83,6 +110,12 @@ var SudokuHints = {
           if(board[row][hintCol] == 0){
             if(board[row].indexOf(hint.value) > -1){
               hint.rows.push(row);
+            }
+            if(boxContainsValue(row, hintCol, hint.value)){
+              var box = cellToBox(row, hintCol);
+              if(hint.boxes.indexOf(box) == -1){
+                hint.boxes.push(box);
+              }
             }
           }
         }
