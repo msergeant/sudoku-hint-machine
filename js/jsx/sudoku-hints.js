@@ -237,7 +237,12 @@ var SudokuBox = React.createClass({
   getInitialState: function() {
     var board = SudokuBoard.create("100000000200000000300000000400000000000000000000000500700000000000500000900000000");
     var marks = SudokuPencilMarks.create(board);
-    return { data: board, pencilMarks: marks, showMarks: false, hint: null};
+    return {
+      data: board,
+      pencilMarks: marks,
+      showMarks: false,
+      hint: null,
+      message: "" };
   },
   cellChange: function(event){
     var chars = event.target.id.split("");
@@ -285,6 +290,12 @@ var SudokuBox = React.createClass({
       this.setState({ pencilMarks: pencilMarks});
     }
   },
+  onLinkToThisClick: function(event){
+    var message = window.location.pathname;
+    var board = this.state.data;
+    message += "?board=" + board.toString();
+    this.setState({ message: <a href={message}>{message}</a> });
+  },
   render: function() {
     var rows = [];
     var errors = this.state.data.errors();
@@ -312,6 +323,10 @@ var SudokuBox = React.createClass({
         <input onClick={this.showPencilMarks} type="submit" value="Pencil Marks" />
         <input onClick={this.showHint} type="submit" value="Show Next Hint" />
         { this.state.hint == null ? '' : doHintButton }
+        <input onClick={this.onLinkToThisClick} type="submit" value="Link To This Board" />
+        </div>
+        <div className="messageCenter">
+          {this.state.message}
         </div>
       </div>
     );
