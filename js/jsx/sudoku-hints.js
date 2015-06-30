@@ -34,6 +34,13 @@ var inputKeyUp = function(){
   }
 };
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 var SudokuCell = React.createClass({
   onClick: function(event){
     event.target.select();
@@ -235,7 +242,14 @@ var SudokuRow = React.createClass({
 
 var SudokuBox = React.createClass({
   getInitialState: function() {
-    var board = SudokuBoard.create("100000000200000000300000000400000000000000000000000500700000000000500000900000000");
+    var queryBoard = getParameterByName("board");
+    var board;
+    if(queryBoard.match(/^\d+$/) != null){
+      board = SudokuBoard.create(queryBoard);
+    }
+    else{
+      board = SudokuBoard.create();
+    }
     var marks = SudokuPencilMarks.create(board);
     return {
       data: board,
