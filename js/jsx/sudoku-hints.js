@@ -310,6 +310,16 @@ var SudokuBox = React.createClass({
     message += "?board=" + board.toString();
     this.setState({ message: <a href={message}>{message}</a> });
   },
+  onClearBoardClick: function(event){
+    var board = SudokuBoard.create();
+    var marks = SudokuPencilMarks.create(board);
+    this.setState({
+      data: board,
+      pencilMarks: marks,
+      showMarks: false,
+      hint: null,
+      message: "" });
+  },
   render: function() {
     var rows = [];
     var errors = this.state.data.errors();
@@ -338,6 +348,7 @@ var SudokuBox = React.createClass({
         <input onClick={this.showHint} type="submit" value="Show Next Hint" />
         { this.state.hint == null ? '' : doHintButton }
         <input onClick={this.onLinkToThisClick} type="submit" value="Link To This Board" />
+        <input onClick={this.onClearBoardClick} type="submit" value="Clear" />
         </div>
         <div className="messageCenter">
           {this.state.message}
