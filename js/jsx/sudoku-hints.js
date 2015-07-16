@@ -313,6 +313,7 @@ var SudokuBox = React.createClass({
   onClearBoardClick: function(event){
     var board = SudokuBoard.create();
     var marks = SudokuPencilMarks.create(board);
+    $("#pencil_marks").attr('checked', false);
     this.setState({
       data: board,
       pencilMarks: marks,
@@ -351,7 +352,8 @@ var SudokuBox = React.createClass({
           {rows}
         </table>
         <div className="sudokuControls">
-        <input onClick={this.showPencilMarks} type="submit" value="Pencil Marks" />
+        <input onClick={this.showPencilMarks} type="checkbox" id="pencil_marks" />
+        <label for="pencil_marks">Pencil Marks</label>
         { hintButton }
         <input onClick={this.onLinkToThisClick} type="submit" value="Link To This Board" />
         <input onClick={this.onClearBoardClick} type="submit" value="Clear" />
