@@ -34,6 +34,19 @@ var inputKeyUp = function(){
   }
 };
 
+function hintMessage(hint){
+  var message = "No more hints were found.";
+  if(hint != null){
+    if(hint.type == "naked"){
+      message = "The highlighted cell contains a naked single. This means that all other numbers have been eliminated from this cell. Place a " + hint.value + " in it."
+    }
+    else{
+      message = "The highlighted cell contains a hidden single. This means that a number cannot be used anywhere else in that " + hint.type + ". Place a " + hint.value + " in the cell."
+    }
+  }
+  return message;
+}
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -273,11 +286,12 @@ var SudokuBox = React.createClass({
   },
   showHint: function(){
     if(this.state.data.errors().type != null){
-      this.setState({ hint: null});
+      this.setState({ hint: null, message: ""});
     }
     else{
       var hint = SudokuHints.create(this.state.data, this.state.pencilMarks).getNextHint();
-      this.setState({ hint: hint});
+      var message = hintMessage(hint);
+      this.setState({ hint: hint, message: message});
     }
   },
   performHint: function(){
@@ -288,7 +302,7 @@ var SudokuBox = React.createClass({
       var board = this.state.data;
       board.changeValue(row, col, hint.value);
       this.state.pencilMarks.adjust(false);
-      this.setState({ data: board, hint: null});
+      this.setState({ data: board, hint: null, message: ""});
     }
   },
   onPencilMarkClick: function(event){
