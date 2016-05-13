@@ -383,5 +383,5 @@ var SudokuBox = React.createClass({
 
 React.render(
   <SudokuBox />,
-  document.getElementById('content')
+  document.getElementById('sudoku-content')
 );
