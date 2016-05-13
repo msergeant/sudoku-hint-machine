@@ -113,3 +113,9 @@
   left: 66%;
 }
 
+.sudokuBox .messageCenter {
+  width: 350px;
+  height: 50px;
+  border: 1px solid black;
+}
+
