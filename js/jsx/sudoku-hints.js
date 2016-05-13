@@ -322,7 +322,7 @@ var SudokuBox = React.createClass({
     var message = window.location.pathname;
     var board = this.state.data;
     message += "?board=" + board.toString();
-    this.setState({ message: <a href={message}>{message}</a> });
+    this.setState({ message: <a href={message} target="_blank">Copy This Link</a> });
   },
   onClearBoardClick: function(event){
     var board = SudokuBoard.create();
@@ -355,7 +355,7 @@ var SudokuBox = React.createClass({
 
     var hintButton;
     if(this.state.hint == null){
-      hintButton = <input onClick={this.showHint} type="submit" value="Show Next Hint" />
+      hintButton = <input onClick={this.showHint} type="submit" value="Get Hint" />
     }
     else{
       hintButton = <input onClick={this.performHint} type="submit" value="Do Hint" />;
