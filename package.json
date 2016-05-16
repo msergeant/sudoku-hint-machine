@@ -1,0 +1,23 @@
+{
+  "name": "sudoku-hint-machine",
+  "version": "1.0.0",
+  "description": "Hint generator for sudoku puzzles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msergeant/sudoku-hint-machine.git"
+  },
+  "keywords": [
+    "sudoku",
+    "hint"
+  ],
+  "author": "Mike Sergeant",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/msergeant/sudoku-hint-machine/issues"
+  },
+  "homepage": "https://github.com/msergeant/sudoku-hint-machine#readme"
+}
