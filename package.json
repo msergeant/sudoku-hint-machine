@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/msergeant/sudoku-hint-machine#readme",
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "browser-sync": "^2.12.8",
+    "gulp": "^3.9.1",
+    "gulp-react": "^3.1.0",
+    "run-sequence": "^1.2.0"
   }
 }
