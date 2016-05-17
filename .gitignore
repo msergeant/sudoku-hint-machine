@@ -1,6 +1,6 @@
 /spec/jasmine
-/js/.module-cache
-/js/sudoku-hints.js
+/src/js/.module-cache
+/src/js/sudoku-hints.js
 /node_modules
 /app
 
