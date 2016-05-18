@@ -284,7 +284,8 @@ var SudokuBox = React.createClass({
   showPencilMarks: function(){
     this.setState({ showMarks: !this.state.showMarks});
   },
-  showHint: function(){
+  showHint: function(event){
+    event.target.blur();
     if(this.state.data.errors().type != null){
       this.setState({ hint: null, message: ""});
     }
@@ -294,7 +295,8 @@ var SudokuBox = React.createClass({
       this.setState({ hint: hint, message: message});
     }
   },
-  performHint: function(){
+  performHint: function(event){
+    event.target.blur();
     var hint = this.state.hint;
     if(hint != null){
       var row = hint.cell[0][0];
@@ -319,12 +321,14 @@ var SudokuBox = React.createClass({
     }
   },
   onLinkToThisClick: function(event){
+    event.target.blur();
     var message = window.location.pathname;
     var board = this.state.data;
     message += "?board=" + board.toString();
     this.setState({ message: <a href={message} target="_blank">Copy This Link</a> });
   },
   onClearBoardClick: function(event){
+    event.target.blur();
     var board = SudokuBoard.create();
     var marks = SudokuPencilMarks.create(board);
     $("#pencil_marks").attr('checked', false);
@@ -366,11 +370,13 @@ var SudokuBox = React.createClass({
           {rows}
         </table>
         <div className="sudokuControls">
-        <input onClick={this.showPencilMarks} type="checkbox" id="pencil_marks" />
-        <label for="pencil_marks">Pencil Marks</label>
-        { hintButton }
-        <input onClick={this.onLinkToThisClick} type="submit" value="Link To This Board" />
-        <input onClick={this.onClearBoardClick} type="submit" value="Clear" />
+          <div className="sudokuButtons">
+            { hintButton }
+            <input onClick={this.onLinkToThisClick} type="submit" value="Link To This Board" />
+            <input onClick={this.onClearBoardClick} type="submit" value="Clear" />
+          </div>
+          <input onClick={this.showPencilMarks} type="checkbox" id="pencil_marks" />
+          <label for="pencil_marks">Pencil Marks</label>
         </div>
         <div className="messageCenter">
           {this.state.message}
