@@ -3,6 +3,7 @@ var react = require('gulp-react');
 var browserSync = require('browser-sync');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
+const jasmine = require('gulp-jasmine');
 
 // Build react file
 gulp.task('react', function() {
@@ -56,6 +57,12 @@ gulp.task('watch', function() {
   gulp.watch('src/js/*.js', ['scripts']);
   gulp.watch('src/js/jsx/*.js', ['react']);
   gulp.watch('src/css/*.css', ['moveCss']);
+});
+
+// Test
+gulp.task('test', function() {
+  gulp.src('spec/*.js')
+    .pipe(jasmine())
 });
 
 gulp.task('default', function(callback) {
