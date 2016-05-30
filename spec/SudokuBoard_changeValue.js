@@ -1,3 +1,6 @@
+var SudokuBoard = require('../src/js/SudokuBoard.js');
+var stringFromBoardArray = require('./helper.js');
+
 describe("SudokuBoard.changeValue", function(){
   it("changes the value in the specified cell", function(){
     var board = SudokuBoard.create();

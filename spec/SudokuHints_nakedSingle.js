@@ -1,3 +1,9 @@
+var SudokuBoard = require('../src/js/SudokuBoard.js');
+var SudokuPencilMarks = require('../src/js/SudokuPencilMarks.js');
+var SudokuHints = require('../src/js/SudokuHints.js');
+var stringFromBoardArray = require('./helper.js');
+var _ = require('./underscore-min.js');
+
 describe("SudokuHints.nakedSingle", function(){
   it("finds naked single", function(){
     var boardString = stringFromBoardArray([[1, 2, 3, 0, 0, 0, 0, 0, 0],

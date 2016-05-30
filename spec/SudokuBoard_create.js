@@ -1,3 +1,6 @@
+var SudokuBoard = require('../src/js/SudokuBoard.js');
+var stringFromBoardArray = require('./helper.js');
+
 describe("SudokuBoard.create", function(){
   it("should initialize with an empty board", function(){
     var board = SudokuBoard.create();

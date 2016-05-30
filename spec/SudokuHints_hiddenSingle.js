@@ -1,3 +1,9 @@
+var SudokuBoard = require('../src/js/SudokuBoard.js');
+var SudokuPencilMarks = require('../src/js/SudokuPencilMarks.js');
+var SudokuHints = require('../src/js/SudokuHints.js');
+var stringFromBoardArray = require('./helper.js');
+var _ = require('./underscore-min.js');
+
 describe("SudokuHints.hiddenSingle", function(){
   it("finds hidden single in a box", function(){
     var boardString = stringFromBoardArray([[0, 0, 0, 0, 0, 0, 0, 0, 0],

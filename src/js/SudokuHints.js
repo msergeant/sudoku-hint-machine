@@ -2,6 +2,7 @@ var SudokuHints = {
   create: function(sudokuBoard, pencilMarks){
     var board = sudokuBoard.values();
     var marks = pencilMarks.values();
+    var SudokuBoard = sudokuBoard;
 
     var hints = function() {};
 
@@ -243,5 +244,10 @@ var SudokuHints = {
 
     return hints;
   }
-}
+};
 
+// Export node module.
+if ( typeof module !== 'undefined' && module.hasOwnProperty('exports') )
+{
+   module.exports = SudokuHints;
+}

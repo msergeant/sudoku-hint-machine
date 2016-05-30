@@ -1,10 +1,12 @@
+function cellToBox(row, col) {
+  var boxRow = Math.floor(row / 3) * 3;
+  var boxCol = Math.floor(col / 3) * 3;
+  return Math.floor(boxRow / 3) * 3 + Math.floor(boxCol / 3);
+}
+
 var SudokuBoard = {
 
-  cellToBox: function(row, col){
-      var boxRow = Math.floor(row / 3) * 3;
-      var boxCol = Math.floor(col / 3) * 3;
-      return Math.floor(boxRow / 3) * 3 + Math.floor(boxCol / 3);
-    },
+  cellToBox: cellToBox,
   insideBox: function(upperLeft, row, col){
     if(upperLeft[0] <= row && row <= (upperLeft[0] + 2) &&
        upperLeft[1] <= col && col <= (upperLeft[1] + 2) ){
@@ -164,6 +166,14 @@ var SudokuBoard = {
       return returnString;
     }
 
+    board.cellToBox = cellToBox;
+
     return board;
   }
+};
+
+// Export node module.
+if ( typeof module !== 'undefined' && module.hasOwnProperty('exports') )
+{
+   module.exports = SudokuBoard;
 }

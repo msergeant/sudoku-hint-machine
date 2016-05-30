@@ -9,6 +9,11 @@ function stringFromBoardArray(boardValues){
   return returnString;
 }
 
+if ( typeof module !== 'undefined' && module.hasOwnProperty('exports') )
+{
+   module.exports = stringFromBoardArray;
+}
+
 //describe("stringFromBoardArray", function(){
   //it("should convert array into a string", function(){
     //var board = [[1, 2, 3, 4, 5, 6, 7, 8, 9],

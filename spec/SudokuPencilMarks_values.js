@@ -1,3 +1,7 @@
+var SudokuBoard = require('../src/js/SudokuBoard.js');
+var SudokuPencilMarks = require('../src/js/SudokuPencilMarks.js');
+var stringFromBoardArray = require('./helper.js');
+
 describe("SudokuPencilMarks.values", function(){
   it("returns full for empty board", function(){
     var board = SudokuBoard.create();

@@ -1,3 +1,7 @@
+var SudokuBoard = require('../src/js/SudokuBoard.js');
+var SudokuPencilMarks = require('../src/js/SudokuPencilMarks.js');
+var stringFromBoardArray = require('./helper.js');
+
 describe("SudokuPencilMarks.remove", function(){
   it("removes specified possibility", function(){
     var boardString = stringFromBoardArray([[0, 1, 2, 3, 4, 0, 0, 0, 0],

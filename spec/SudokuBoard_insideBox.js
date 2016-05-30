@@ -1,3 +1,6 @@
+var SudokuBoard = require('../src/js/SudokuBoard.js');
+var stringFromBoardArray = require('./helper.js');
+
 describe("SudokuBoard.insideBox", function(){
   it("returns false if the cell is outside the given box", function(){
     var upperLeft = [6, 0];

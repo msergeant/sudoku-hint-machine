@@ -1,3 +1,6 @@
+var SudokuBoard = require('../src/js/SudokuBoard.js');
+var stringFromBoardArray = require('./helper.js');
+
 describe("SudokuBoard.toString", function(){
   it("works for blank board", function(){
     var boardArray = [[1, 2, 3, 4, 5, 6, 7, 8, 9],

@@ -95,4 +95,10 @@ var SudokuPencilMarks = {
 
     return marks;
   }
+};
+
+// Export node module.
+if ( typeof module !== 'undefined' && module.hasOwnProperty('exports') )
+{
+   module.exports = SudokuPencilMarks;
 }
