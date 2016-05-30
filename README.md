@@ -4,32 +4,22 @@ This is a sudoku hint generator done completely client-side in
 javascript. The UI is built using
 [React](http://facebook.github.io/react/).
 
-React
+Installation
 -------
-To install the React JSX transformer:
+To get started:
 
-    npm install -g react-tools
-    
-To compile the jsx into js:
+    npm install
 
-    jsx js/jsx js
+To run:
 
-or to continuously update
-
-    jsx --watch js/jsx js
+    gulp
 
 Testing
 -------
 Tests are  written in [Jasmine](http://jasmine.github.io/).
-You can install [Jasmine in several ways](https://github.com/jasmine/jasmine#installation).
 
-The SpecRunner expects jasmine files to be at spec/jasmine. To run the tests:
+To run the tests:
 
-    mkdir spec/jasmine
+    gulp test
 
-  [Download this version of it](https://github.com/jasmine/jasmine/releases/download/v2.3.4/jasmine-standalone-2.3.4.zip) and save it to the above directory.
-
-    unzip jasmine-standalone-2.3.4.zip
-
-    Then just open the file spec/SpecRunner.html in a browser.
 
