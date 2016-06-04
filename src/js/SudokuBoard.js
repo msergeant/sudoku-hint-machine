@@ -166,6 +166,18 @@ var SudokuBoard = {
       return returnString;
     }
 
+    board.isSolved = function (){
+      if(!board.isValid()) {
+        return false;
+      }
+
+      if(board.toString().match(/0/)) {
+        return false;
+      }
+
+      return true;
+    };
+
     board.cellToBox = cellToBox;
 
     return board;
