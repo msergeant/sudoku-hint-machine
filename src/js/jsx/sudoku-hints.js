@@ -253,6 +253,10 @@ var SudokuRow = React.createClass({
   }
 });
 
+function defaultMessage(board) {
+  return board.isSolved() ? "You solved it!" : "";
+}
+
 var SudokuBox = React.createClass({
   getInitialState: function() {
     var queryBoard = getParameterByName("board");
@@ -269,7 +273,7 @@ var SudokuBox = React.createClass({
       pencilMarks: marks,
       showMarks: false,
       hint: null,
-      message: "" };
+      message: defaultMessage(board) };
   },
   cellChange: function(event){
     var chars = event.target.id.split("");
@@ -279,7 +283,7 @@ var SudokuBox = React.createClass({
 
     board.changeValue(row, col, parseInt(event.target.value));
     this.state.pencilMarks.adjust(board.values()[row][col] == 0);
-    this.setState({ data: board, hint: null});
+    this.setState({ data: board, hint: null, message: defaultMessage(board) });
   },
   showPencilMarks: function(){
     this.setState({ showMarks: !this.state.showMarks});
@@ -304,7 +308,7 @@ var SudokuBox = React.createClass({
       var board = this.state.data;
       board.changeValue(row, col, hint.value);
       this.state.pencilMarks.adjust(false);
-      this.setState({ data: board, hint: null, message: ""});
+      this.setState({ data: board, hint: null, message: defaultMessage(board)});
     }
   },
   onPencilMarkClick: function(event){
