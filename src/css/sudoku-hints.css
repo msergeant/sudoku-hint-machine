@@ -132,3 +132,34 @@
   margin-right: 4px;
 }
 
+@media (max-width: 400px){
+  .sudokuBox table input {
+    width: 27px;
+    height: 27px;
+  }
+
+  .sudokuBox .cell{
+    width: 27px;
+    height: 27px;
+  }
+
+  .sudokuBox .messageCenter {
+    width: 248px;
+    min-height: 100px;
+    padding: 10px;
+  }
+
+  .sudokuBox .pencil{
+    font-size: 7px;
+  }
+
+  .sudokuBox .marks {
+    height: 29px;
+    width: 27px;
+  }
+
+  .sudokuBox .sudokuButtons input[type="submit"] {
+    margin-bottom: 3px;
+    font-size: 8px;
+  }
+}
