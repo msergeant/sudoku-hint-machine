@@ -4,6 +4,8 @@ var SudokuPermuter = {
     var regex2 = new RegExp(num2, 'g');
     return originalString.replace(regex1, '?').replace(regex2, num1).replace(/\?/g, num2);
   },
+  columnSwap: function(originalString, col1, col2) {
+  }
 };
 
 // Export node module.
