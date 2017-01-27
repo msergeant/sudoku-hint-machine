@@ -23,6 +23,9 @@ var SudokuPermuter = {
     return originalString.match(/.{1,9}/g).map(function(str) {
       return swapChar(str, first, last);
     }).join('');
+  },
+  rotate: function(originalString) {
+    return "";
   }
 };
 
