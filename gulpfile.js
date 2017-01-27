@@ -61,7 +61,7 @@ gulp.task('watch', function() {
 
 // Test
 gulp.task('test', function() {
-  gulp.src('spec/*.js')
+  gulp.src('spec/*_spec.js')
     .pipe(jasmine())
 });
 
