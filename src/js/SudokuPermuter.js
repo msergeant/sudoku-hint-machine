@@ -17,7 +17,8 @@ var SudokuPermuter = {
       return originalString;
     }
 
-    const [first, last] = [col1, col2].sort();
+    const first = col1 > col2 ? col2 : col1;
+    const last = col1 > col2 ? col1 : col2;
 
     return originalString.match(/.{1,9}/g).map(function(str) {
       return swapChar(str, first, last);
