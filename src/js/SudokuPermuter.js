@@ -25,7 +25,18 @@ var SudokuPermuter = {
     }).join('');
   },
   rotate: function(originalString) {
-    return "";
+    const outGrid = [];
+    for( let i = 0; i < originalString.length; i++) {
+      const row = Math.floor( i / 9);
+      const col = i % 9;
+
+      const newCol = 9 - row - 1;
+      const newRow = col;
+
+      const newIndex = newRow * 9 + newCol;
+      outGrid[newIndex] = originalString[i];
+    }
+    return outGrid.join('');
   }
 };
 
