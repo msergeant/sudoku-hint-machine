@@ -54,6 +54,10 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+function dailyDivExists() {
+  return Boolean(document.getElementById('daily-puzzle-message'));
+}
+
 var SudokuCell = React.createClass({
   onClick: function(event){
     event.target.select();
@@ -261,7 +265,9 @@ var SudokuBox = React.createClass({
   getInitialState: function() {
     var queryBoard = getParameterByName("board");
     var board;
-    if(queryBoard.match(/^\d+$/) != null){
+    if(dailyDivExists()) {
+      board = SudokuBoard.create(SudokuGenerator.fetch('2017-02-01'));
+    } else if(queryBoard.match(/^\d{81}$/) != null){
       board = SudokuBoard.create(queryBoard);
     }
     else{
@@ -390,8 +396,32 @@ var SudokuBox = React.createClass({
   }
 });
 
+var DailyPuzzleMessage = React.createClass({
+  getInitialState: function() {
+    return { date: '2017-02-01' };
+  },
+  render: function() {
+    return (
+      <div>
+      <h2>
+        {this.state.date}
+      </h2>
+      <p>
+      Here is the puzzle for today
+      </p>
+      </div>
+    );
+  }
+});
 
 React.render(
   <SudokuBox />,
   document.getElementById('sudoku-content')
 );
+
+if(dailyDivExists()) {
+  React.render(
+    <DailyPuzzleMessage />,
+    document.getElementById('daily-puzzle-message')
+  );
+}
