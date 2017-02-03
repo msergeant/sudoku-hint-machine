@@ -265,10 +265,11 @@ var SudokuBox = React.createClass({
   getInitialState: function() {
     var queryBoard = getParameterByName("board");
     var board;
-    if(dailyDivExists()) {
-      board = SudokuBoard.create(SudokuGenerator.fetch('2017-02-01'));
-    } else if(queryBoard.match(/^\d{81}$/) != null){
+
+    if(queryBoard.match(/^\d{81}$/) != null){
       board = SudokuBoard.create(queryBoard);
+    } else if(dailyDivExists()) {
+      board = SudokuBoard.create(SudokuGenerator.fetch('2017-02-01'));
     }
     else{
       board = SudokuBoard.create();
