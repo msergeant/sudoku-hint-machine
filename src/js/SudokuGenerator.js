@@ -1,6 +1,6 @@
-var SudokuGenerator = {
+const SudokuGenerator = {
   fetch: function(date) {
-    var puzzles = [
+    const puzzles = [
       "385006294410905000000300007000008020074050360020100000800003000000802016752600839",
       "104600000700000030068023000806050290090164080045080706000830460020000008000006301",
       "504700000006000010970081000709020038030475090250090706000910075080000900000007401",
@@ -48,9 +48,53 @@ var SudokuGenerator = {
       "070190000005407210000050960416800000830020056000003784028040000041208600000061020"
     ];
 
-    return puzzles[Math.round(Math.random() * 44)];
+    const hash = Math.floor(Math.random() * 1000000000);
+    const startingPuzzle = puzzles[hash % 44];
+    let finishingPuzzle = startingPuzzle;
+
+    // Swap numbers
+    const shuffled = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9], hash);
+    for(let index = 0; index < 8; index += 2) {
+      finishingPuzzle = SudokuPermuter.swap(finishingPuzzle, shuffled[index], shuffled[index + 1]);
+    }
+
+    // Move columns around
+    let colSwap = shuffle([0, 1, 2], Math.floor(hash / 10));
+    finishingPuzzle = SudokuPermuter.columnSwap(finishingPuzzle, colSwap[0], colSwap[1]);
+
+    colSwap = shuffle([3, 4, 5], Math.floor(hash / 100));
+    finishingPuzzle = SudokuPermuter.columnSwap(finishingPuzzle, colSwap[0], colSwap[1]);
+
+    colSwap = shuffle([6, 7, 8], Math.floor(hash / 1000));
+    finishingPuzzle = SudokuPermuter.columnSwap(finishingPuzzle, colSwap[0], colSwap[1]);
+
+    // Rotate up to 3 times
+    const times = Math.floor(hash / 10000) % 3;
+    for(let counter = 0; counter < times; counter++) {
+      finishingPuzzle = SudokuPermuter.rotate(finishingPuzzle);
+    }
+
+    return finishingPuzzle;
   },
 };
+
+function shuffle(array, rand) {
+  let randomIndex;
+  let tmpValue;
+  let currentIndex = array.length;
+
+  while(currentIndex != 0 && rand > 0) {
+    randomIndex = rand % currentIndex;
+    rand = Math.floor( rand / 10);
+    currentIndex -= 1;
+
+    tmpValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = tmpValue;
+  }
+
+  return array;
+}
 
 
 
