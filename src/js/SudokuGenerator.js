@@ -48,7 +48,7 @@ const SudokuGenerator = {
       "070190000005407210000050960416800000830020056000003784028040000041208600000061020"
     ];
 
-    const hash = Math.floor(Math.random() * 1000000000);
+    const hash = murmurHash3.x86.hash32(date);
     const startingPuzzle = puzzles[hash % 44];
     let finishingPuzzle = startingPuzzle;
 

@@ -25,7 +25,7 @@ gulp.task('browserSync', function() {
 
 // Combine javascripts into 1 file
 gulp.task('scripts', function() {
-  return gulp.src('src/js/*.js')
+  return gulp.src(['src/js/*.js', 'node_modules/murmur-hash/lib/v3/murmur.js'])
     .pipe(concat('app.js'))
     .pipe(gulp.dest('app'))
     .on('end', browserSync.reload);
