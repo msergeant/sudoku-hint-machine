@@ -54,6 +54,23 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+function getDateParameter() {
+  var dateString = getParameterByName('date');
+
+  if(dateString) {
+    var date = new Date(dateString);
+    if(date != 'Invalid Date') {
+      return shortDateString(date);
+    }
+  }
+
+  return shortDateString(new Date());
+}
+
+function shortDateString(date) {
+  return date.toISOString().split('T')[0];
+}
+
 function dailyDivExists() {
   return Boolean(document.getElementById('daily-puzzle-message'));
 }
@@ -269,7 +286,7 @@ var SudokuBox = React.createClass({
     if(queryBoard.match(/^\d{81}$/) != null){
       board = SudokuBoard.create(queryBoard);
     } else if(dailyDivExists()) {
-      board = SudokuBoard.create(SudokuGenerator.fetch('2017-02-01'));
+      board = SudokuBoard.create(SudokuGenerator.fetch(getDateParameter()));
     }
     else{
       board = SudokuBoard.create();
@@ -399,7 +416,7 @@ var SudokuBox = React.createClass({
 
 var DailyPuzzleMessage = React.createClass({
   getInitialState: function() {
-    return { date: '2017-02-01' };
+    return { date: getDateParameter() };
   },
   render: function() {
     return (
