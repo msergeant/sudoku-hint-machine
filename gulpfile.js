@@ -7,7 +7,8 @@ const jasmine = require('gulp-jasmine');
 
 // Build react file
 gulp.task('react', function() {
-  return gulp.src('src/js/jsx/sudoku-hints.js')
+  return gulp.src('src/js/jsx/*.js')
+      .pipe(concat('sudoku-hints.js'))
       .pipe(react())
       .pipe(gulp.dest('app'))
       .on('end', browserSync.reload);
