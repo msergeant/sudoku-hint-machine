@@ -90,7 +90,7 @@ const SudokuGenerator = {
       finishingPuzzle = SudokuPermuter.rotate(finishingPuzzle);
     }
 
-    colSwap = shuffle([0,1,2], sectionHash);
+    colSwap = shuffle([0, 1, 2], sectionHash);
     finishingPuzzle = SudokuPermuter.sectionSwap(finishingPuzzle, colSwap[0], colSwap[1]);
 
     times = Math.floor(sectionHash / 1000) % 3;

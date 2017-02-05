@@ -42,8 +42,6 @@ var SudokuPermuter = {
     if(section1 === section2) {
       return originalString;
     }
-    section1 -= 1;
-    section2 -= 1;
 
     let rowList = originalString.match(/\d{9}/g);
     let hold1 = rowList[section1 * 3];
