@@ -1,6 +1,13 @@
+var murmurHash3 = require('../../node_modules/murmur-hash/lib/v3/murmur.js');
+var SudokuPermuter = require('./SudokuPermuter.js');
 const SudokuGenerator = {
   fetch: function(date) {
     const puzzles = [
+      "000003900000027408000610020086090570701050806052060140030089000209430000008500000",
+      "000000165100200030090013800700349008309806504800152003008520040030007001614000000",
+      "706040003513807000002006708061000042000010000270000850104600200000709184800020305",
+      "003058090600100200000000637200586009380709042900432001867000000002005006090260400",
+      "910603040200040003053200000640010025001000600580090074000009560300080001090105037",
       "385006294410905000000300007000008020074050360020100000800003000000802016752600839",
       "104600000700000030068023000806050290090164080045080706000830460020000008000006301",
       "504700000006000010970081000709020038030475090250090706000910075080000900000007401",
@@ -48,28 +55,38 @@ const SudokuGenerator = {
       "070190000005407210000050960416800000830020056000003784028040000041208600000061020"
     ];
 
-    const hash = murmurHash3.x86.hash32(date);
-    const startingPuzzle = puzzles[hash % 44];
+    const shuffleHash = murmurHash3.x86.hash32(date);
+    const rotationHash = murmurHash3.x86.hash32(shuffleHash.toString());
+    const swapHash = murmurHash3.x86.hash32(rotationHash.toString());
+    const startingPuzzle = puzzles[shuffleHash % (puzzles.length - 1)];
     let finishingPuzzle = startingPuzzle;
 
     // Swap numbers
-    const shuffled = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9], hash);
+    const shuffled = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9], swapHash);
     for(let index = 0; index < 8; index += 2) {
       finishingPuzzle = SudokuPermuter.swap(finishingPuzzle, shuffled[index], shuffled[index + 1]);
     }
 
-    // Move columns around
-    let colSwap = shuffle([0, 1, 2], Math.floor(hash / 10));
+    let colSwap = shuffle([0, 1, 2], Math.floor(shuffleHash / 100));
     finishingPuzzle = SudokuPermuter.columnSwap(finishingPuzzle, colSwap[0], colSwap[1]);
 
-    colSwap = shuffle([3, 4, 5], Math.floor(hash / 100));
+    let times = Math.floor(rotationHash / 1) % 3;
+    for(let counter = 0; counter < times; counter++) {
+      finishingPuzzle = SudokuPermuter.rotate(finishingPuzzle);
+    }
+
+    colSwap = shuffle([3, 4, 5], Math.floor(shuffleHash / 100000));
     finishingPuzzle = SudokuPermuter.columnSwap(finishingPuzzle, colSwap[0], colSwap[1]);
 
-    colSwap = shuffle([6, 7, 8], Math.floor(hash / 1000));
+    times = Math.floor(rotationHash / 1000) % 3;
+    for(let counter = 0; counter < times; counter++) {
+      finishingPuzzle = SudokuPermuter.rotate(finishingPuzzle);
+    }
+
+    colSwap = shuffle([6, 7, 8], Math.floor(shuffleHash / 100000000));
     finishingPuzzle = SudokuPermuter.columnSwap(finishingPuzzle, colSwap[0], colSwap[1]);
 
-    // Rotate up to 3 times
-    const times = Math.floor(hash / 10000) % 3;
+    times = Math.floor(rotationHash / 1000000) % 3;
     for(let counter = 0; counter < times; counter++) {
       finishingPuzzle = SudokuPermuter.rotate(finishingPuzzle);
     }
