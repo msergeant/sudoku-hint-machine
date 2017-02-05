@@ -1,5 +1,3 @@
-var murmurHash3 = require('../../node_modules/murmur-hash/lib/v3/murmur.js');
-var SudokuPermuter = require('./SudokuPermuter.js');
 const SudokuGenerator = {
   fetch: function(date) {
     const puzzles = [
@@ -58,6 +56,7 @@ const SudokuGenerator = {
     const shuffleHash = murmurHash3.x86.hash32(date);
     const rotationHash = murmurHash3.x86.hash32(shuffleHash.toString());
     const swapHash = murmurHash3.x86.hash32(rotationHash.toString());
+    const sectionHash = murmurHash3.x86.hash32(swapHash.toString());
     const startingPuzzle = puzzles[shuffleHash % (puzzles.length - 1)];
     let finishingPuzzle = startingPuzzle;
 
@@ -87,6 +86,14 @@ const SudokuGenerator = {
     finishingPuzzle = SudokuPermuter.columnSwap(finishingPuzzle, colSwap[0], colSwap[1]);
 
     times = Math.floor(rotationHash / 1000000) % 3;
+    for(let counter = 0; counter < times; counter++) {
+      finishingPuzzle = SudokuPermuter.rotate(finishingPuzzle);
+    }
+
+    colSwap = shuffle([0,1,2], sectionHash);
+    finishingPuzzle = SudokuPermuter.sectionSwap(finishingPuzzle, colSwap[0], colSwap[1]);
+
+    times = Math.floor(sectionHash / 1000) % 3;
     for(let counter = 0; counter < times; counter++) {
       finishingPuzzle = SudokuPermuter.rotate(finishingPuzzle);
     }

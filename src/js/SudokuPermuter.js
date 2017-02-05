@@ -37,6 +37,28 @@ var SudokuPermuter = {
       outGrid[newIndex] = originalString[i];
     }
     return outGrid.join('');
+  },
+  sectionSwap: function(originalString, section1, section2) {
+    if(section1 === section2) {
+      return originalString;
+    }
+    section1 -= 1;
+    section2 -= 1;
+
+    let rowList = originalString.match(/\d{9}/g);
+    let hold1 = rowList[section1 * 3];
+    let hold2 = rowList[section1 * 3 + 1];
+    let hold3 = rowList[section1 * 3 + 2];
+
+    rowList[section1 * 3] = rowList[section2 * 3];
+    rowList[section1 * 3 + 1] = rowList[section2 * 3 + 1];
+    rowList[section1 * 3 + 2] = rowList[section2 * 3 + 2];
+
+    rowList[section2 * 3] = hold1;
+    rowList[section2 * 3 + 1] = hold2;
+    rowList[section2 * 3 + 2] = hold3;
+
+    return rowList.join("");
   }
 };
 
