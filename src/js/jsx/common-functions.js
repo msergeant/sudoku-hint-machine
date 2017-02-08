@@ -59,7 +59,7 @@ function getDateParameter() {
 
   if(dateString) {
     var date = new Date(dateString);
-    if(date != 'Invalid Date') {
+    if(date != 'Invalid Date' && !isInTheFuture(date)) {
       return shortDateString(date);
     }
   }
@@ -79,3 +79,6 @@ function defaultMessage(board) {
   return board.isSolved() ? "You solved it!" : "";
 }
 
+function isInTheFuture(date) {
+  return date > new Date;
+}
